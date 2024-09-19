@@ -1,11 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&display=swap');
 :root{
+    /* ? Paleta de Cores */
     --color01: #2C3036ff;
     --color02: #3C4B61ff;
     --color03: #3E6094ff;
     --color04: #2C6AC7ff;
     --color05: #0567FAff;
+    /* ! Fontes */
+    --rubik: 'Rubik', Arial, sans-serif, system-ui;
+    --hind: 'Hind', Arial, sans-serif, system-ui;
 }
 *{
     padding: 0;
@@ -44,14 +48,14 @@ main{
     color: white;
 }
 .content > h1{
-    font-family: 'Rubik', sans-serif;
+    font-family: var(--rubik);
     font-weight: 500;
     font-size: 4em;
     text-shadow: 10px 0 30px rgba(36, 32, 56, 0.5);
 }
 .content > p{
     margin: 0 0 20px 0;
-    font-family: 'Rubik', sans-serif;
+    font-family: var(--rubik);
     font-weight: 300;
     text-shadow: 5px 2px 10px rgba(36, 32, 56, 0.5);
 }
@@ -71,8 +75,93 @@ main{
     padding: 5px 40px;
     transition: 0.5s;
 }
+/* Conteúdo modal */
+.sign{
+    position: absolute;
+    cursor: pointer;
+    color: white;
+    transition: transform 1s;
+}
+.janela-modal{
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    overflow-y: scroll;
+    transition: 1s;
+    position: fixed;
+    visibility: hidden;
+}
+.janela-modal.abrir{
+    transform: translateX(0); /* ! Deixar 0*/
+    visibility: visible; /* ! Deixar VISIBLE*/
+}
+.janela-modal .sign{
+    display: flex;
+    visibility: visible;
+}
+.janela-modal.abrir .sign{
+    display: none;
+}
+.janela-modal h1, .janela-modal h2{
+    font-family: var(--hind);
+    text-align: center;
+    font-weight: 600;
+}
+.janela-modal .modal > h1:not(:first-child){
+    border-top: 2px solid black;
+    padding-top: 10px;
+}
+.modal{
+    position: absolute;
+    right: 0;
+    color: black;
+    background-color: rgba(155, 155, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+.modal .apresentacao{
+    align-items: center;
+    display: grid;
+}
+.modal .apresentacao #imagem{
+    grid-area: imagem;
+}
+.modal .apresentacao img, .modal .orientadores img{
+    border-radius: 50%;
+}
+.modal .apresentacao #nome{
+    grid-area: nome;
+}
+.modal .apresentacao #cargo ul{
+    font-family: var(--rubik);
+    font-weight: 400;
+}
+.modal .apresentacao #redes{
+    grid-area: redes;
+    padding: 15px 0 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: space-evenly;
+}
+.modal .apresentacao .rede a{
+    color: black;
+    display: inline-block;
+}
+.modal .orientadores{
+    display: grid;
+    grid-template-areas:
+        'imagem imagem'
+        'nome nome';
+}
+.modal .fechar{
+    position: fixed;
+    cursor: pointer;
+    font-size: 2.5em;
+}
 /* ? Pc, Notebook, Tablet */
 @media screen and (min-width: 768px){
+    /* Predefinições iniciais */
     .btn:hover{
         transform: scale(1.05) translateY(-1.5px);
         background-color: rgb(90, 83, 192);
@@ -89,97 +178,37 @@ main{
     #fechar-2{
         display: none;
     }
-    /* ? Modal */
+    /* MODAL */
     .sign{
-        position: absolute;
-        cursor: pointer;
-        font-size: 5em;
-        color: white;
         top: 45%;
         right: 0;
-        transition: transform 1s;
-    }
-    .janela-modal.abrir{
-        transform: translateX(0); /*! Deixar 0 */
-        visibility: visible; /*! Deixar visible */
+        font-size: 5em;
     }
     .janela-modal{
         display: flex;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 100vw;
-        overflow-y: scroll;
-        transition: 1s;
-        transform: translateX(100%); /*! Deixar 100%*/
-        position: fixed; /*! Deixar FIXED*/
-        visibility: hidden; /*! Deixar HIDDEN*/
-    }
-    .janela-modal .sign{
-        display: flex;
-        visibility: visible;
-    }
-    .janela-modal.abrir .sign{
-        display: none;
-    }
-    .janela-modal h1, .janela-modal h2{
-        font-family: 'Hind', Arial, Helvetica, sans-serif;
-        text-align: center;
-        font-weight: 600;
+        transform: translateX(100%); /* ! Deixar 100%*/
     }
     .modal{
-        visibility: none;
-        position: absolute;
-        right: 0;
-        padding: 50px 20px;
-        color: black;
-        background-color: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        min-width: 450px;
         width: 550px;
+        padding: 50px 20px;
+        min-width: 450px;
     }
     .modal .apresentacao{
-        align-items: center;
-        display: grid;
         grid-template-columns: 64px;
         grid-template-areas:
             'imagem nome'
-            'texto texto'
+            'cargo cargo'
             'redes redes';
-    }
-    .modal .apresentacao #imagem{
-        grid-area: imagem;
     }
     .modal .apresentacao img{
         height: 64px;
         width: 64px;
-        border-radius: 50%;
     }
-    .modal .apresentacao #nome{
-        grid-area: nome;
+    .modal .apresentacao #cargo{
+        grid-area: cargo;
     }
-    .modal .apresentacao #texto{
-        grid-area: texto;
-    }
-    .modal .apresentacao #texto > q{
-        text-indent: 10px;
-        font-style: italic;
-        font-family: 'Rubik', sans-serif;
-        font-weight: 100;
-        text-align: justify;
-    }
-    .modal .apresentacao #texto ul{
-        font-family: 'Rubik', sans-serif;
-        font-weight: 400;
+    .modal .apresentacao #cargo ul{
         padding: 5px 50px;
-    }
-    .modal .apresentacao #redes{
-        grid-area: redes;
-        padding: 15px 0 10px 0;
-        display: flex;
-        flex-wrap: wrap;
-        text-align: center;
-        justify-content: space-evenly;
     }
     .modal .apresentacao #redes .rede{
         width: 33%;
@@ -187,23 +216,10 @@ main{
     .modal .apresentacao .rede a{
         transition: 0.5s;
         font-size: 2em;
-        color: black;
-        display: inline-block;
     }
     .modal .apresentacao .rede a:hover{
         transform: scale(1.2) translateY(-2px);
         text-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-    .modal hr{
-        margin: 10px 0;
-    }
-    .modal .orientadores{
-        display: grid;
-        grid-template-areas:
-            'imagem imagem'
-            'nome nome';
-        justify-content: center;
-        gap: 10px 50%;
     }
     .modal .orientadores #imagem{
         text-align: center;
@@ -211,157 +227,97 @@ main{
     .modal .orientadores img{
         height: 80px;
         width: 80px;
-        border-radius: 50%;
     }
     .modal .fechar{
-        position: fixed;
-        cursor: pointer;
         text-align: center;
         width: 96%;
         margin: auto;
-        font-size: 2.5em;
     }
 }
 /* ? Celulares */
 @media screen and (max-width: 768px){
+    /* Predefinições iniciais */
     #sign-1{
         display: none;
     }
     #fechar-1{
         display: none;
     }
-    /* ? Modal */
+    /* MODAL */
     .sign{
-        position: absolute;
-        cursor: pointer;
-        font-size: 3em;
         top: 0;
-        color: white;
         right: 45%;
-        transition: transform 1s;
+        font-size: 3em;
     }
-    .janela-modal.abrir {
-        transform: translateX(0);
-        visibility: visible; /*! Deixar VISIBLE*/
+    .janela-modal{
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        transform: translateY(-100%); /* ! Deixar -100% */
     }
     .janela-modal .fechar{
         position: fixed;
         font-size: 3em;
     }
-    .janela-modal{
-        top: 0;
-        right: 0;
-        bottom: 0;
-        width: 100vw;
-        overflow-y: scroll;
-        transition: 1s;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* Internet Explorer e Edge */
-        transform: translateY(-100%); /*! Deixar -100%*/
-        position: fixed; /*! Deixar FIXED*/
-        visibility: hidden; /*! Deixar HIDDEN*/
-    }
     .janela-modal::-webkit-scrollbar{
         display: none;
     }
-    .janela-modal .sign{
-        display: flex;
-        visibility: visible;
-    }
-    .janela-modal.abrir .sign{
-        display: none;
-    }
-    .janela-modal h1, .janela-modal h2{
-        font-family: 'Hind', Arial, Helvetica, sans-serif;
-        text-align: center;
-        font-weight: 600;
+    .janela-modal .modal > h1:not(:first-child){
+        margin: 10px 1em 0 1em;
     }
     .modal{
         width: 100vw;
-        visibility: none;
-        position: absolute;
-        right: 0;
-        padding: 10px;
-        color: black;
-        background-color: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
+        padding: 10px 0 50px 0;
         min-width: 350px;
-        padding-bottom: 50px;
     }
     .modal .apresentacao{
-        align-items: center;
-        display: grid;
         grid-template-areas:
             'imagem'
             'nome'
             'redes'
-            'texto';
+            'cargo';
     }
     .modal .apresentacao #imagem{
-        grid-area: imagem;
         text-align: center;
     }
     .modal .apresentacao img{
         height: 128px;
         width: 128px;
-        border-radius: 50%;
-    }
-    .modal .apresentacao #nome{
-        grid-area: nome;
     }
     .modal .apresentacao #nome h2{
         font-size: 1.4em;
     }
-    .modal .apresentacao #texto ul{
+    .modal .apresentacao #cargo ul{
         text-align: center;
         list-style-type: none;
         padding: 10px;
-        width: 20rem;
+        width: 27rem;
         margin: 5px auto;
         border: solid black;
         border-top: 10px;
         border-bottom: 10px;
-        font-family: 'Rubik', sans-serif;
-        font-weight: 400;
-    }
-    .modal .apresentacao #redes{
-        grid-area: redes;
-        padding: 15px 0 10px 0;
-        display: flex;
-        flex-wrap: wrap;
-        text-align: center;
-        justify-content: space-evenly;
     }
     .modal .apresentacao #redes .rede{
         width: 25%;
     }
     .modal .apresentacao .rede a{
-        color: black;
-        display: inline-block;
         font-size: 3em;
     }
     .modal .orientadores{
-        display: grid;
-        grid-template-areas:
-            'imagem imagem'
-            'nome nome';
-        text-align: center;
+        justify-content: center;
+        gap: 10px 30%;
     }
     .modal #orientador{
         border-top: 2px solid rgba(255, 255, 255, 0.2);
+        margin: 50px;
         padding-top: 10px;
         margin-top: 20px;
     }
     .modal .orientadores img{
         width: 128px;
         height: 128px;
-        border-radius: 50%;
     }
     .modal .fechar{
-        position: fixed;
-        cursor: pointer;
         left: 45%;
-        font-size: 2.5em;
     }
     .modal .fechar#fechar-2{
         transform: rotate(0deg);
